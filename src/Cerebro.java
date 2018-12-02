@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Cerebro {
     public static ArrayList<Neurona> neuronas;
-
+    FileInputStream fos;
     public Cerebro() {
         try {
             load();
@@ -35,7 +35,7 @@ public class Cerebro {
     }
 
     public void load() throws Exception {
-        FileInputStream fos = new FileInputStream("recuerdos.txt");
+        fos = new FileInputStream("recuerdos.txt");
         ObjectInputStream input = new ObjectInputStream(fos);
         neuronas = (ArrayList<Neurona>) input.readObject();
         input.close();
@@ -55,17 +55,20 @@ public class Cerebro {
 
     public static void main(String[] args) {
         Cerebro c = new Cerebro();
-        for(int i = 0; i<200;i++){
-            c.crearNeurona();
-        }
+        while(true){
         System.out.println("Empezamos el programa");
-        System.out.println("Por favor introduzca una cadena por teclado:");
+        System.out.println("¿Que hacemos?");
         String entradaTeclado = "";
         Scanner entradaEscaner = new Scanner(System.in);
         entradaTeclado = entradaEscaner.nextLine();
-        System.out.println("Entrada recibida por teclado es: \"" + entradaTeclado + "\"");
-        c.neuronas.get(1).conectarCon(c.neuronas.get(2));
-        System.out.println(c);
+        if(entradaTeclado.contains("añadir")){
+            c.crearNeurona();
+        }
+        if(entradaTeclado.contains("mostrar")){
+            c.mostrarNeuronas();
+        }
+
+        }
     }
 
     public static ArrayList<Neurona> getNeuronas() {
@@ -81,7 +84,17 @@ public class Cerebro {
         String res = "";
         for(Neurona n : neuronas){
             res = res + n + " -- " + n.conectadas + "\n";
+
         }
         return res;
     }
+
+    public void mostrarNeuronas(){
+        System.out.println(neuronas.toString());
+    }
+
+    public void limpiarNeuronas(){
+
+    }
 }
+
