@@ -55,6 +55,8 @@ public class Cerebro {
 
     public static void main(String[] args) {
         Cerebro c = new Cerebro();
+        Comunicacion cm = new Comunicacion();
+        cm.start();
         while(true){
         System.out.println("Empezamos el programa");
         System.out.println("¿Que hacemos?");
@@ -64,9 +66,34 @@ public class Cerebro {
         if(entradaTeclado.contains("añadir")){
             c.crearNeurona();
         }
-        if(entradaTeclado.contains("mostrar")){
+        if(entradaTeclado.contains("mostrar")) {
             c.mostrarNeuronas();
         }
+        if(entradaTeclado.contains("sumar")){
+            System.out.println("Primer numero");
+            entradaTeclado = "";
+            entradaEscaner = new Scanner(System.in);
+            entradaTeclado = entradaEscaner.nextLine();
+            neuronas.get(neuronas.size()-1).addEntradaExterna(Integer.parseInt(entradaTeclado),999999999);
+            System.out.println("Segundo numero");
+            entradaTeclado = "";
+            entradaEscaner = new Scanner(System.in);
+            entradaTeclado = entradaEscaner.nextLine();
+            neuronas.get(neuronas.size() - 1).addEntradaExterna(Integer.parseInt(entradaTeclado),999999999);
+            System.out.println("res" + neuronas.get(neuronas.size()-1).salida);
+            System.out.println("res" + neuronas.get(neuronas.size()-1).entradas);
+            cm.setResultado(neuronas.get(neuronas.size()-1).salida);
+            System.out.println("Ta bien o que?");
+            entradaTeclado = "";
+            entradaEscaner = new Scanner(System.in);
+            entradaTeclado = entradaEscaner.nextLine();
+            if(entradaTeclado.contains("Si")){
+                neuronas.get(neuronas.size()-1).estadoEntradas = 1;
+            }else{
+                neuronas.get(neuronas.size()-1).estadoEntradas = 2;
+            }
+        }
+
 
         }
     }
@@ -91,10 +118,6 @@ public class Cerebro {
 
     public void mostrarNeuronas(){
         System.out.println(neuronas.toString());
-    }
-
-    public void limpiarNeuronas(){
-
     }
 }
 
